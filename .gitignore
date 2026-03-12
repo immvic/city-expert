@@ -1,1 +1,15 @@
+# Ignore environment file with API keys
 .env
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments (if you use venv)
+venv/
+env/
+
+# Any editor-specific files
+.vscode/
