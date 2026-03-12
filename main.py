@@ -310,18 +310,6 @@ def health() -> JSONResponse:
     return ok({"message": "Server running"}, message="Server running")
 
 
-@app.get("/debug-key")
-def debug_key() -> JSONResponse:
-    """Return non-sensitive info about the loaded OpenRouter API key."""
-    try:
-        key = OPENROUTER_API_KEY or ""
-        if not key:
-            return ok({"present": False, "length": 0, "last4": ""})
-        return ok({"present": True, "length": len(key), "last4": key[-4:]})
-    except Exception:
-        return err("Unexpected error.", status_code=500)
-
-
 @app.get("/weather")
 def weather(city: str = Query(default="")) -> JSONResponse:
     """Get current temperature for a city."""
