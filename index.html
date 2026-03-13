@@ -10,108 +10,24 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body data-theme="dark">
-    <div class="app">
-      <header class="topbar">
-        <div class="brand">
-          <div class="logo">CA</div>
-          <div>
-            <p class="title">City ActivityAdvisor</p>
-            <p class="subtitle">Weather-aware outing planner</p>
+    <div class="app landing">
+      <section class="hero">
+        <div class="hero-content">
+          <p class="hero-kicker">City ActivityAdvisor</p>
+          <h1>Plan a great day out without guessing the weather.</h1>
+          <p class="hero-subtitle">
+            Drop a city, an activity, and a date. We’ll blend live weather, nearby places, and a quick
+            advisor summary into one clean plan.
+          </p>
+          <div class="hero-actions">
+            <a class="primary hero-cta" href="/planning">Start planning</a>
+            <span class="hero-note">Fast, local, no fuss.</span>
           </div>
         </div>
-        <div class="toggle">
-          <span class="toggle-label">Light</span>
-          <button id="themeToggle" type="button" aria-label="Toggle theme">
-            <span class="knob"></span>
-          </button>
-          <span class="toggle-label">Dark</span>
-        </div>
-      </header>
-
-      <main class="grid">
-        <section class="card weather">
-          <div class="card-head">
-            <h2>Weather</h2>
-            <p>Live temperature and forecast cues</p>
-          </div>
-          <div class="weather-output" id="weatherOutput">
-            <p class="placeholder">Enter a city to load weather</p>
-          </div>
-        </section>
-
-        <section class="card query">
-          <div class="card-head">
-            <h2>Plan Inputs</h2>
-            <p>Activity, city, and date in one place</p>
-          </div>
-          <form id="planForm" class="form">
-            <label>
-              Activity
-              <input name="activity" type="text" placeholder="billiards, coffee, museum" required />
-            </label>
-            <label>
-              City
-              <input name="city" type="text" placeholder="Chisinau" required />
-            </label>
-            <label>
-              Date
-              <input name="date" type="text" placeholder="tomorrow or 2026-03-13" />
-            </label>
-            <div class="actions">
-              <button type="submit" class="primary">Get Advisor</button>
-              <button type="button" id="loadPlaces" class="secondary">Find Places</button>
-            </div>
-          </form>
-          <div class="places" id="placesOutput">
-            <p class="placeholder">Places will appear here</p>
-          </div>
-        </section>
-
-        <section class="card advisor">
-          <div class="card-head">
-            <h2>Advisor</h2>
-            <p>Personalized recommendation in the middle</p>
-          </div>
-          <div class="advisor-output" id="advisorOutput">
-            <p class="placeholder">Run the advisor to see recommendations</p>
-          </div>
-        </section>
-
-        <section class="card extras">
-          <div class="card-head">
-            <h2>Integrations</h2>
-            <p>Weather + Places + AI endpoints</p>
-          </div>
-          <div class="api-list">
-            <div class="api-row">
-              <span class="chip">GET</span>
-              <span>/weather?city=</span>
-            </div>
-            <div class="api-row">
-              <span class="chip">GET</span>
-              <span>/places?activity=&amp;city=</span>
-            </div>
-            <div class="api-row">
-              <span class="chip">POST</span>
-              <span>/advisor</span>
-            </div>
-          </div>
-          <div class="tips">
-            <p>Tip: Try “tomorrow” as a date for fast testing.</p>
-          </div>
-        </section>
-      </main>
-
-      <footer class="footer">
-        <span>Built for fast city planning</span>
-        <span class="dot"></span>
-        <span>OpenRouter + Open-Meteo + OpenStreetMap</span>
-      </footer>
+      </section>
     </div>
-
-    <script src="app.js"></script>
   </body>
 </html>

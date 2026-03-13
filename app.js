@@ -27,7 +27,7 @@ themeToggle.addEventListener("click", () => {
   localStorage.setItem("caa-theme", next);
 });
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = window.location.origin;
 
 const renderError = (el, message) => {
   el.innerHTML = `<p class="placeholder">${message}</p>`;
@@ -54,12 +54,24 @@ const renderPlaces = (data) => {
   const list = data.places
     .slice(0, 6)
     .map(
-      (place) => `
-      <div>
-        <strong>${place.name}${place.category ? ` - ${place.category}` : ""}</strong>
-        <p>${place.address || ""}</p>
+      (place) => {
+        const hasCoords = place.lat != null && place.lon != null;
+        const mapUrl = hasCoords
+          ? `https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lon}`
+          : "";
+        const linkHtml = mapUrl
+          ? `<a class="map-link" href="${mapUrl}" target="_blank" rel="noreferrer">Map</a>`
+          : "";
+        return `
+      <div class="place">
+        <div class="place-title">
+          <strong>${place.name}${place.category ? ` - ${place.category}` : ""}</strong>
+          ${linkHtml}
+        </div>
+        <p class="place-address">${place.address || ""}</p>
       </div>
-    `
+    `;
+      }
     )
     .join("");
   placesOutput.innerHTML = list || `<p class="placeholder">No places found</p>`;

@@ -8,12 +8,17 @@ import requests
 from dotenv import load_dotenv
 from fastapi import FastAPI, Form, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, Response, RedirectResponse
 
 # Load environment variables from .env
 load_dotenv()
 
 APP_NAME = "City ActivityAdvisor"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+INDEX_PATH = os.path.join(BASE_DIR, "index.html")
+PLANNING_PATH = os.path.join(BASE_DIR, "planning.html")
+STYLES_PATH = os.path.join(BASE_DIR, "styles.css")
+APP_JS_PATH = os.path.join(BASE_DIR, "app.js")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "").strip()
 OPENROUTER_BASE_URL = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1").strip()
 OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "openai/gpt-4o").strip()
@@ -49,6 +54,47 @@ def ok(data: Any, message: Optional[str] = None) -> JSONResponse:
 def err(message: str, status_code: int = 400) -> JSONResponse:
     """Build an error JSON response in the required format."""
     return JSONResponse({"status": "error", "data": {"message": message}}, status_code=status_code)
+
+
+def serve_static(path: str, media_type: str) -> Response:
+    """Serve a static asset from disk."""
+    try:
+        return FileResponse(path, media_type=media_type)
+    except Exception:
+        return JSONResponse(
+            {"status": "error", "data": {"message": "Static asset not found."}},
+            status_code=404,
+        )
+
+
+@app.get("/")
+def landing_page() -> Response:
+    """Serve the landing page."""
+    return serve_static(INDEX_PATH, "text/html")
+
+
+@app.get("/planning")
+def planning_page() -> Response:
+    """Serve the planning page."""
+    return serve_static(PLANNING_PATH, "text/html")
+
+
+@app.get("/planing")
+def planning_page_legacy() -> Response:
+    """Redirect legacy misspelling to the correct planning route."""
+    return RedirectResponse(url="/planning")
+
+
+@app.get("/styles.css")
+def styles() -> Response:
+    """Serve the shared stylesheet."""
+    return serve_static(STYLES_PATH, "text/css")
+
+
+@app.get("/app.js")
+def app_script() -> Response:
+    """Serve the client-side script."""
+    return serve_static(APP_JS_PATH, "text/javascript")
 
 
 def parse_date_input(date_input: Optional[str]) -> Optional[date]:
